@@ -15,14 +15,20 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println("HAHAHHAA");
+        
+        // Create intent to send to Kerberos app's BroadcastReceiver.  
         Intent intent = new Intent();
+    	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         intent.setAction("com.example.dummyKerb.TESTING");
         //intent.putExtra("package", "com.example.dummydemo");
         Context c = this.getApplicationContext();
         String pname = c.getPackageName();
-        Log.d("Debug", "Packname " + pname);
+        System.out.println("Packname " + pname);
         intent.putExtra("package", pname);
         sendBroadcast(intent);
+        
+        // Create a Broadcast Receiver for receiving the ticket.  
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.example.dummydemo.TESTING");
         myReceiver = new BroadcastReceiver() {
