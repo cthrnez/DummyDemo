@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 	private BroadcastReceiver myReceiver;
@@ -33,8 +34,10 @@ public class MainActivity extends Activity {
     }
     
 	/* Create a Broadcast Receiver for receiving the ticket. 
-	 * This method should start the new activity to display the 
-	 * received ticket */
+	 * This method also starts display ticket activity*/
+    
+    // Need to Add Code here to start intent activity for starting the display 
+    // page
     public void receiveTicket(){
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.example.dummydemo.TESTING");
