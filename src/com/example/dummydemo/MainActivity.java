@@ -16,21 +16,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("HAHAHHAA");
-        
-        // Create a Broadcast Receiver for receiving the ticket.  
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.example.dummydemo.TESTING");
-        myReceiver = new BroadcastReceiver() {
-    		@Override
-    		public void onReceive(Context context, Intent intent) {
-    			// Update view
-    			Log.d("Debug", "Final receiver");
-    		}
-    	};
-    	registerReceiver(myReceiver, filter);
     }
 
-    // method to send intent to getTicket
+    /* method to send intent to getTicket */
     public void getTickets(){
     	
         Intent intent = new Intent();
@@ -43,7 +31,23 @@ public class MainActivity extends Activity {
         intent.putExtra("package", pname);
         sendBroadcast(intent);
     }
-   
+    
+	/* Create a Broadcast Receiver for receiving the ticket. 
+	 * This method should start the new activity to display the 
+	 * received ticket */
+    public void receiveTicket(){
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.example.dummydemo.TESTING");
+        myReceiver = new BroadcastReceiver() {
+    		@Override
+    		public void onReceive(Context context, Intent intent) {
+    			// Update view
+    			Log.d("Debug", "Final receiver");
+    		}
+    	};
+    	registerReceiver(myReceiver, filter);
+    }
+    
     @Override
     protected void onDestroy() {
     	super.onDestroy();
