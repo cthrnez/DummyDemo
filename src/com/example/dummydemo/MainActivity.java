@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
@@ -20,7 +21,7 @@ public class MainActivity extends Activity {
     }
 
     /* method to send intent to getTicket */
-    public void getTickets(){
+    public void getTickets(View view){
     	
         Intent intent = new Intent();
     	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
@@ -35,9 +36,7 @@ public class MainActivity extends Activity {
     
 	/* Create a Broadcast Receiver for receiving the ticket. 
 	 * This method also starts display ticket activity*/
-    
-    // Need to Add Code here to start intent activity for starting the display 
-    // page
+   
     public void receiveTicket(){
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.example.dummydemo.TESTING");
