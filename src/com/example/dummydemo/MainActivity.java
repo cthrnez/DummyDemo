@@ -25,6 +25,8 @@ public class MainActivity extends Activity {
     		public void onReceive(Context context, Intent intent) {
     			// Update view
     			Log.d("Debug", "Final receiver");
+    			String s = intent.getExtras().getString("ticket");
+    			System.out.println(s);
     		}
     	};
     	registerReceiver(myReceiver, filter, "com.example.dummyKerb.LISTEN_PERM", null);
