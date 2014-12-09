@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 	private BroadcastReceiver myReceiver;
@@ -16,8 +18,31 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("HAHAHHAA");
+<<<<<<< HEAD
         
         // Create a Broadcast Receiver for receiving the ticket.  
+=======
+    }
+
+    /* method to send intent to getTicket */
+    public void getTickets(View view){
+    	
+        Intent intent = new Intent();
+    	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        intent.setAction("com.example.dummyKerb.TESTING");
+        //intent.putExtra("package", "com.example.dummydemo");
+        Context c = this.getApplicationContext();
+        String pname = c.getPackageName();
+        System.out.println("Packname " + pname);
+        intent.putExtra("package", pname);
+        sendBroadcast(intent);
+    }
+    
+	/* Create a Broadcast Receiver for receiving the ticket. 
+	 * This method also starts display ticket activity*/
+   
+    public void receiveTicket(){
+>>>>>>> 0c6fc797502609d7780ee3af8ac7227f6cb0d1ca
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.example.dummydemo.TESTING");
         myReceiver = new BroadcastReceiver() {
