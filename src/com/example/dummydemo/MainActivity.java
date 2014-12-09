@@ -11,8 +11,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
+	private Button button;
 	private BroadcastReceiver myReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class MainActivity extends Activity {
     		}
     	};
     	registerReceiver(myReceiver, filter, "com.example.dummyKerb.LISTEN_PERM", null);
+        addListenerOnButton();
     	
     	// Create intent to send to Kerberos app's BroadcastReceiver.  
         Intent intent = new Intent();
@@ -73,6 +77,26 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
     	super.onDestroy();
     	unregisterReceiver(myReceiver);
+    }
+
+    public void addListenerOnButton() {
+    	button = (Button) findViewById(R.id.button1);
+    	button.setOnClickListener(new View.OnClickListener() {
+    		@Override
+    		public void onClick(View v) {
+	    		Intent intent = new Intent();
+	        	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+	            intent.setAction("com.example.dummyKerb.TESTING");
+	            //intent.putExtra("package", "com.example.dummydemo");
+	            Context c = MainActivity.this.getApplicationContext();
+	            String pname = c.getPackageName();
+	            //System.out.println("Packname " + pname);
+	            intent.putExtra("package", pname);
+	            sendBroadcast(intent, "com.example.dummyKerb.LISTEN_PERM");
+	            System.out.println("Sending stuff");
+    		}
+    	});
+    	
     }
     
 }
