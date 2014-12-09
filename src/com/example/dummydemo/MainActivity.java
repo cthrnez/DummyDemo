@@ -28,8 +28,8 @@ public class MainActivity extends Activity {
     		public void onReceive(Context context, Intent intent) {
     			// Update view
     			Log.d("Debug", "Final receiver");
-    			String s = intent.getExtras().getString("ticket");
-    			System.out.println(s);
+    			//String s = intent.getExtras().getString("ticket");
+    			//System.out.println(s);
     			// Get ticket as array of bytes.
     			byte [] binary = intent.getExtras().getByteArray("bytes");
     			// Save ticket in local storage?  
