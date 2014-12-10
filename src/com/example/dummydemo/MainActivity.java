@@ -39,6 +39,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private Button button;
@@ -61,8 +63,21 @@ public class MainActivity extends Activity {
     			//System.out.println(s);
     			// Get ticket as array of bytes.
     			byte [] binary = intent.getExtras().getByteArray("bytes");
-    			System.out.println(binary);
+    			//System.out.println(binary);
+    			//String ticket=Base64.encodeToString(binary,Base64.DEFAULT);
+    			String ticket=null;
+                try {
+                    ticket = new String(binary, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
     			
+    			
+    			TextView myText = (TextView) findViewById(R.id.textView1);
+    			myText.setText(ticket);
+    			
+//    			
     			//one method that worked
 //    			HttpClient client = new DefaultHttpClient();
 //    			HttpPost post = new HttpPost("http://128.31.34.152:8080/");
@@ -89,6 +104,7 @@ public class MainActivity extends Activity {
     			 System.out.println("at the end!");
 
     			postData(binary);
+    			 
     			// Save ticket in local storage?  
 //    			String filename="blah";
 //    			try {
@@ -108,22 +124,22 @@ public class MainActivity extends Activity {
         addListenerOnButton();
     	
     	// Create intent to send to Kerberos app's BroadcastReceiver.  
-        Intent intent = new Intent();
-    	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        intent.setAction("com.example.dummyKerb.TESTING");
-        //intent.putExtra("package", "com.example.dummydemo");
-        Context c = this.getApplicationContext();
-        String pname = c.getPackageName();
-        //System.out.println("Packname " + pname);
-        intent.putExtra("package", pname);
-        sendBroadcast(intent, "com.example.dummyKerb.LISTEN_PERM");
+//        Intent intent = new Intent();
+//    	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+//        intent.setAction("com.example.dummyKerb.TESTING");
+//        //intent.putExtra("package", "com.example.dummydemo");
+//        Context c = this.getApplicationContext();
+//        String pname = c.getPackageName();
+//        //System.out.println("Packname " + pname);
+//        intent.putExtra("package", pname);
+//        sendBroadcast(intent, "com.example.dummyKerb.LISTEN_PERM");
     }
     
     
     protected void postData(byte[] content) {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://128.31.34.152:8080/");
+        HttpPost httppost = new HttpPost("http://18.189.120.18:8080/");
        // HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
         
 
@@ -133,16 +149,12 @@ public class MainActivity extends Activity {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
             String ticket=Base64.encodeToString(content,Base64.DEFAULT);
-            System.out.println(Base64.decode(ticket, Base64.DEFAULT));
+            System.out.println("decoded ticket is" +Base64.decode(ticket, Base64.DEFAULT));
             nameValuePairs.add(new BasicNameValuePair("ticket", ticket));
             nameValuePairs.add(new BasicNameValuePair("principal", "lsyang"));
-          //  httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//
-//            // Execute HTTP Post Request
-//            HttpResponse response = httpclient.execute(httppost);
-           // byte[] content = 
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-            httppost.setEntity(new ByteArrayEntity(content));  
+           // httppost.setEntity(new ByteArrayEntity(content));  
            
             HttpResponse response = httpclient.execute(httppost);
             System.out.println("response is "+response);

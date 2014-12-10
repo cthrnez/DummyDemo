@@ -15,16 +15,16 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="74dp"
-        android:text="XVMKerberosManager"
         android:textAppearance="@style/AppBaseTheme"
-        android:textSize="30px" />
+        android:textSize="10px" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="GET TICKET" />
+        android:layout_marginTop="15dp"
+        android:text="List XVM machines!" />
 
 </RelativeLayout>
