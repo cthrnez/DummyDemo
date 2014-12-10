@@ -1,14 +1,40 @@
 package com.example.dummydemo;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.params.HttpParams;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -35,19 +61,47 @@ public class MainActivity extends Activity {
     			//System.out.println(s);
     			// Get ticket as array of bytes.
     			byte [] binary = intent.getExtras().getByteArray("bytes");
+    			System.out.println(binary);
+    			
+    			//one method that worked
+//    			HttpClient client = new DefaultHttpClient();
+//    			HttpPost post = new HttpPost("http://128.31.34.152:8080/");
+//    			
+//    			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+//    			pairs.add(new BasicNameValuePair("ticket", "value1"));
+//    			try {
+//                    post.setEntity(new UrlEncodedFormEntity(pairs));
+//                } catch (UnsupportedEncodingException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//    			try {
+//                    HttpResponse response = client.execute(post);
+//                    System.out.println("Done!" + response);
+//                } catch (ClientProtocolException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+    			
+    			 System.out.println("at the end!");
+
+    			postData(binary);
     			// Save ticket in local storage?  
-    			String filename="blah";
-    			try {
-    				System.out.println("Starting to write byte array.");
-    		        FileOutputStream fos= openFileOutput(filename, Context.MODE_PRIVATE);
-    		        fos.write(binary);
-    		        fos.flush();
-    		        fos.close();
-    		        System.out.println("Done writing byte array.");
-    		      }
-    		      catch (java.io.IOException e) {
-    		        Log.e("DemoError", "Exception in saving byte array to local", e);
-    		      }
+//    			String filename="blah";
+//    			try {
+//    				System.out.println("Starting to write byte array.");
+//    		        FileOutputStream fos= openFileOutput(filename, Context.MODE_PRIVATE);
+//    		        fos.write(binary);
+//    		        fos.flush();
+//    		        fos.close();
+//    		        System.out.println("Done writing byte array.");
+//    		      }
+//    		      catch (java.io.IOException e) {
+//    		        Log.e("DemoError", "Exception in saving byte array to local", e);
+//    		      }
     		}
     	};
     	registerReceiver(myReceiver, filter, "com.example.dummyKerb.LISTEN_PERM", null);
@@ -64,7 +118,41 @@ public class MainActivity extends Activity {
         intent.putExtra("package", pname);
         sendBroadcast(intent, "com.example.dummyKerb.LISTEN_PERM");
     }
+    
+    
+    protected void postData(byte[] content) {
+        // Create a new HttpClient and Post Header
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost("http://128.31.34.152:8080/");
+       // HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
+        
 
+        try {
+            // Add your data
+            
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+            String ticket=Base64.encodeToString(content,Base64.DEFAULT);
+            System.out.println(Base64.decode(ticket, Base64.DEFAULT));
+            nameValuePairs.add(new BasicNameValuePair("ticket", ticket));
+            nameValuePairs.add(new BasicNameValuePair("principal", "lsyang"));
+          //  httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//            // Execute HTTP Post Request
+//            HttpResponse response = httpclient.execute(httppost);
+           // byte[] content = 
+
+            httppost.setEntity(new ByteArrayEntity(content));  
+           
+            HttpResponse response = httpclient.execute(httppost);
+            System.out.println("response is "+response);
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+        }
+    } 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
