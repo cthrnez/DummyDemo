@@ -120,7 +120,7 @@ public class MainActivity extends Activity {
 //    		      }
     		}
     	};
-    	registerReceiver(myReceiver, filter, "com.example.dummyKerb.LISTEN_PERM", null);
+    	registerReceiver(myReceiver, filter, "com.example.dummyKerb.KERB_LISTENER_PERM", null);
         addListenerOnButton();
     	
     	// Create intent to send to Kerberos app's BroadcastReceiver.  
@@ -139,8 +139,8 @@ public class MainActivity extends Activity {
     protected void postData(byte[] content) {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://18.189.120.18:8080/");
-       // HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
+        //HttpPost httppost = new HttpPost("http://18.189.120.18:8080/");
+        HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
         
 
         try {
@@ -192,7 +192,7 @@ public class MainActivity extends Activity {
 	            String pname = c.getPackageName();
 	            //System.out.println("Packname " + pname);
 	            intent.putExtra("package", pname);
-	            sendBroadcast(intent, "com.example.dummyKerb.LISTEN_PERM");
+	            sendBroadcast(intent, "com.example.dummyKerb.KERB_LISTENER_PERM");
 	            System.out.println("Sending stuff");
     		}
     	});
