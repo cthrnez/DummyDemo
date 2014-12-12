@@ -57,28 +57,17 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println("HAHAHHAA");
+
         // Create a Broadcast Receiver for receiving the ticket.  
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.example.dummydemo.TESTING");
         myReceiver = new BroadcastReceiver() {
     		@Override
     		public void onReceive(Context context, Intent intent) {
-    			Log.d("Debug", "Final receiver");
     			// Get ticket as array of bytes.
-    			byte [] binary = intent.getExtras().getByteArray("bytes");
-    			String ticket = null;
-                try {
-                    ticket = new String(binary, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-    			// TextView myText = (TextView) findViewById(R.id.textView1);
-    			// myText.setText(ticket);
-    			System.out.println("at the end!");
+    			byte [] ticket = intent.getExtras().getByteArray("bytes");
     			// Send ticket to server.  
-    			postData(binary);
+    			postData(ticket);
     		}
     	};
     	registerReceiver(myReceiver, filter, "com.example.dummyKerb.KERB_LISTENER_PERM", null);
@@ -93,21 +82,19 @@ public class MainActivity extends Activity {
     protected void postData(byte[] content) {
     	// Create a new HttpClient and Post Header
     	HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://128.31.35.19:8080/");
-        // HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
+        //HttpPost httppost = new HttpPost("http://128.31.35.19:8080/");
+        HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
         try {
         	// Populate and send the HTTP Post.  
         	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         	String ticket=new String(Base64.encode(content, Base64.NO_WRAP));
-        	Log.i("decoded ticket is ", ticket);
        	 	nameValuePairs.add(new BasicNameValuePair("ticket", ticket));
-       	 	nameValuePairs.add(new BasicNameValuePair("principal", "lsyang"));
        	 	nameValuePairs.add(new BasicNameValuePair("command", command));
        	 	EditText machine = (EditText) findViewById(R.id.machine);
        	 	nameValuePairs.add(new BasicNameValuePair("machine", machine.getText().toString()));
        	 	httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
        	 	HttpResponse response = httpclient.execute(httppost);
-       	 	System.out.println("response is "+ response);
+
        	 	// Output the server's response.  
        	 	HttpEntity entity  = response.getEntity();
        	 	String responseString = EntityUtils.toString(entity, "UTF-8");
@@ -168,7 +155,6 @@ public class MainActivity extends Activity {
         intent.putExtra("server", "18.181.0.62");
         intent.putExtra("port", 442);
         sendBroadcast(intent, "com.example.dummyKerb.KERB_LISTENER_PERM");
-        System.out.println("Sending stuff");
     }
 
     /*

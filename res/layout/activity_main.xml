@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
-        android:layout_alignLeft="@+id/machine"
+        android:layout_alignLeft="@+id/textView2"
         android:height="20dp"
         android:text="List All XVMs"
         android:width="120dp" />
@@ -28,7 +28,7 @@
         android:layout_marginLeft="19dp"
         android:layout_marginTop="18dp"
         android:paddingLeft="5px"
-        android:text="Enter Machine Name (for Reboot):"
+        android:text="Enter Machine Name (for Reboot): \n"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="20px" />
 
@@ -41,13 +41,13 @@
         android:layout_marginTop="41dp"
         android:textAppearance="@style/AppBaseTheme"
         android:textSize="20px"
-        android:text="asjdklfjld" />
+        android:text="Output here: " />
 
     <EditText
         android:id="@+id/machine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView2"
+        android:layout_alignLeft="@+id/textView2"
         android:layout_below="@+id/textView2"
         android:ems="10"
         android:hint="" />
