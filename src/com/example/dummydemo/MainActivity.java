@@ -49,8 +49,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	private Button button1;
-	private Button button2;
+	private Button button1;  // List button.
+	private Button button2;  // Reboot button.
 	private String command = "";
 	private BroadcastReceiver myReceiver;
     @Override

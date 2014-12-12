@@ -7,8 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.coconuts.MainActivity" >
-    
-    
+
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -16,10 +15,10 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_alignLeft="@+id/machine"
-        android:text="List XVMs"
-        android:width="100dp"
-        android:height="20dp" />
-    
+        android:height="20dp"
+        android:text="List All XVMs"
+        android:width="120dp" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -32,8 +31,7 @@
         android:text="Enter Machine Name (for Reboot):"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="20px" />
-    
-    
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -42,8 +40,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
         android:textAppearance="@style/AppBaseTheme"
-        android:textSize="20px" />
-    
+        android:textSize="20px"
+        android:text="asjdklfjld" />
+
     <EditText
         android:id="@+id/machine"
         android:layout_width="wrap_content"
@@ -51,19 +50,17 @@
         android:layout_alignRight="@+id/textView2"
         android:layout_below="@+id/textView2"
         android:ems="10"
-        android:hint=""/>
+        android:hint="" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/machine"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:height="20dp"
         android:text="Reboot"
-        android:width="100dp"
-        android:height="20dp" />
-
-
-    
+        android:width="100dp" />
 
 </RelativeLayout>
