@@ -58,18 +58,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("HAHAHHAA");
-        
         // Create a Broadcast Receiver for receiving the ticket.  
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.example.dummydemo.TESTING");
         myReceiver = new BroadcastReceiver() {
     		@Override
     		public void onReceive(Context context, Intent intent) {
-    			// Update view
     			Log.d("Debug", "Final receiver");
     			// Get ticket as array of bytes.
     			byte [] binary = intent.getExtras().getByteArray("bytes");
-    			String ticket=null;
+    			String ticket = null;
                 try {
                     ticket = new String(binary, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -79,8 +77,8 @@ public class MainActivity extends Activity {
     			// TextView myText = (TextView) findViewById(R.id.textView1);
     			// myText.setText(ticket);
     			System.out.println("at the end!");
+    			// Send ticket to server.  
     			postData(binary);
-    			 
     		}
     	};
     	registerReceiver(myReceiver, filter, "com.example.dummyKerb.KERB_LISTENER_PERM", null);
@@ -88,25 +86,17 @@ public class MainActivity extends Activity {
     	
     }
     
-    
+    /*
+     * Send the ticket and XVM command details to proxy server, 
+     * output response.  
+     */
     protected void postData(byte[] content) {
     	// Create a new HttpClient and Post Header
     	HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost("http://128.31.35.19:8080/");
         // HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
-        /*
-        String filename="blah";
         try {
-        	System.out.println("Starting to write byte array.");
-        	FileOutputStream fos= openFileOutput(filename, Context.MODE_PRIVATE);
-            fos.write(content);
-            fos.flush();
-            fos.close();
-            System.out.println("Done writing byte array.");
-        } catch (java.io.IOException e) {
-        	Log.e("DemoError", "Exception in saving byte array to local", e);
-        }*/
-        try {
+        	// Populate and send the HTTP Post.  
         	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         	String ticket=new String(Base64.encode(content, Base64.NO_WRAP));
         	Log.i("decoded ticket is ", ticket);
@@ -118,7 +108,7 @@ public class MainActivity extends Activity {
        	 	httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
        	 	HttpResponse response = httpclient.execute(httppost);
        	 	System.out.println("response is "+ response);
-       	 	
+       	 	// Output the server's response.  
        	 	HttpEntity entity  = response.getEntity();
        	 	String responseString = EntityUtils.toString(entity, "UTF-8");
        	 	TextView myText = (TextView) findViewById(R.id.textView1);
@@ -143,6 +133,9 @@ public class MainActivity extends Activity {
     	unregisterReceiver(myReceiver);
     }
     
+    /*
+     * Send ticket request to the Kerberos app.  
+     */
     private void sendTicketRequest() {
     	Intent intent = new Intent();
     	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
@@ -158,6 +151,9 @@ public class MainActivity extends Activity {
         System.out.println("Sending stuff");
     }
 
+    /*
+     * Add listeners to the two buttons.  
+     */
     public void addListenerOnButton() {
     	button1 = (Button) findViewById(R.id.button1);
     	button1.setOnClickListener(new View.OnClickListener() {
