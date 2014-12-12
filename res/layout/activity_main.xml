@@ -7,16 +7,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.coconuts.MainActivity" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="74dp"
-        android:textAppearance="@style/AppBaseTheme"
-        android:textSize="10px" />
     
     <TextView
         android:id="@+id/textView2"
@@ -29,32 +19,45 @@
         android:paddingLeft="5px"
         android:text="Enter Machine Name (for Reboot):"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="6pt" />
+        android:textSize="20px" />
     
-    <EditText android:id="@+id/machine" 
-        android:layout_height="wrap_content" 
-        android:layout_width="wrap_content" 
-        android:layout_below="@id/textView2"
-        android:layout_marginLeft="5px" 
-        android:layout_marginRight="5px"
-        android:hint="blah" />
     
-
-    <Button
-        android:id="@+id/button1"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignTop="@+id/textView1"
-        android:text="List" />
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:textAppearance="@style/AppBaseTheme"
+        android:textSize="20px" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView1"
-        android:layout_marginLeft="24dp"
+        android:layout_below="@+id/machine"
+        android:layout_marginTop="41dp"
         android:layout_toRightOf="@+id/textView1"
         android:text="Reboot" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_alignLeft="@+id/machine"
+        android:text="List" />
+
+    <EditText
+        android:id="@+id/machine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:align_bottom="@+id/button1"
+        android:ems="10"
+        android:hint=""/>
 
 </RelativeLayout>
