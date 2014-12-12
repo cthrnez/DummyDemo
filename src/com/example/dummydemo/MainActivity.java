@@ -29,6 +29,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,11 +44,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	private Button button;
+	private Button button1;
+	private Button button2;
+	private String command = "";
 	private BroadcastReceiver myReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +67,8 @@ public class MainActivity extends Activity {
     		public void onReceive(Context context, Intent intent) {
     			// Update view
     			Log.d("Debug", "Final receiver");
-    			//String s = intent.getExtras().getString("ticket");
-    			//System.out.println(s);
     			// Get ticket as array of bytes.
     			byte [] binary = intent.getExtras().getByteArray("bytes");
-    			//System.out.println(binary);
-    			//String ticket=Base64.encodeToString(binary,Base64.DEFAULT);
     			String ticket=null;
                 try {
                     ticket = new String(binary, "UTF-8");
@@ -76,118 +76,57 @@ public class MainActivity extends Activity {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-    			
-    			
-    			TextView myText = (TextView) findViewById(R.id.textView1);
-    			myText.setText(ticket);
-    			
-//    			
-    			//one method that worked
-//    			HttpClient client = new DefaultHttpClient();
-//    			HttpPost post = new HttpPost("http://128.31.34.152:8080/");
-//    			
-//    			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-//    			pairs.add(new BasicNameValuePair("ticket", "value1"));
-//    			try {
-//                    post.setEntity(new UrlEncodedFormEntity(pairs));
-//                } catch (UnsupportedEncodingException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//    			try {
-//                    HttpResponse response = client.execute(post);
-//                    System.out.println("Done!" + response);
-//                } catch (ClientProtocolException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-    			
-    			 System.out.println("at the end!");
-
+    			// TextView myText = (TextView) findViewById(R.id.textView1);
+    			// myText.setText(ticket);
+    			System.out.println("at the end!");
     			postData(binary);
     			 
-    			// Save ticket in local storage?  
-//    			String filename="blah";
-//    			try {
-//    				System.out.println("Starting to write byte array.");
-//    		        FileOutputStream fos= openFileOutput(filename, Context.MODE_PRIVATE);
-//    		        fos.write(binary);
-//    		        fos.flush();
-//    		        fos.close();
-//    		        System.out.println("Done writing byte array.");
-//    		      }
-//    		      catch (java.io.IOException e) {
-//    		        Log.e("DemoError", "Exception in saving byte array to local", e);
-//    		      }
     		}
     	};
     	registerReceiver(myReceiver, filter, "com.example.dummyKerb.KERB_LISTENER_PERM", null);
         addListenerOnButton();
     	
-    	// Create intent to send to Kerberos app's BroadcastReceiver.  
-//        Intent intent = new Intent();
-//    	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-//        intent.setAction("com.example.dummyKerb.TESTING");
-//        //intent.putExtra("package", "com.example.dummydemo");
-//        Context c = this.getApplicationContext();
-//        String pname = c.getPackageName();
-//        //System.out.println("Packname " + pname);
-//        intent.putExtra("package", pname);
-//        sendBroadcast(intent, "com.example.dummyKerb.LISTEN_PERM");
     }
     
     
     protected void postData(byte[] content) {
-        // Create a new HttpClient and Post Header
-        HttpClient httpclient = new DefaultHttpClient();
+    	// Create a new HttpClient and Post Header
+    	HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost("http://128.31.35.19:8080/");
-       // HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
-     
-               // Save ticket in local storage?  
-         String filename="blah";
-          try {
-              System.out.println("Starting to write byte array.");
-              FileOutputStream fos= openFileOutput(filename, Context.MODE_PRIVATE);
-             fos.write(content);
-              fos.flush();
-              fos.close();
-              System.out.println("Done writing byte array.");
-            }
-            catch (java.io.IOException e) {
-              Log.e("DemoError", "Exception in saving byte array to local", e);
-            }
-
+        // HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
+        /*
+        String filename="blah";
         try {
-            // Add your data
-            
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-         //   String ticket = new String(content, "UTF-8");
-            String ticket=new String(Base64.encode(content, Base64.NO_WRAP));
-          //  String ticket=Base64.encodeBase64String(content);
-          Log.i("decoded ticket is ", ticket);
-            nameValuePairs.add(new BasicNameValuePair("ticket", ticket));
-            nameValuePairs.add(new BasicNameValuePair("principal", "lsyang"));
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            
-//            File file = new File("/data/data/com.example.dummydemo/files/blah");
-//            InputStreamEntity reqEntity = new InputStreamEntity(new FileInputStream(file), -1);
-//            reqEntity.setContentType("binary/octet-stream");
-//            reqEntity.setChunked(true); // Send in multiple parts if needed
-//          //  httppost.setEntity(reqEntity);
-//
-//            httppost.setEntity(new ByteArrayEntity(content));  
-           
-            HttpResponse response = httpclient.execute(httppost);
-            System.out.println("response is "+response);
-
+        	System.out.println("Starting to write byte array.");
+        	FileOutputStream fos= openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write(content);
+            fos.flush();
+            fos.close();
+            System.out.println("Done writing byte array.");
+        } catch (java.io.IOException e) {
+        	Log.e("DemoError", "Exception in saving byte array to local", e);
+        }*/
+        try {
+        	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        	String ticket=new String(Base64.encode(content, Base64.NO_WRAP));
+        	Log.i("decoded ticket is ", ticket);
+       	 	nameValuePairs.add(new BasicNameValuePair("ticket", ticket));
+       	 	nameValuePairs.add(new BasicNameValuePair("principal", "lsyang"));
+       	 	nameValuePairs.add(new BasicNameValuePair("command", command));
+       	 	EditText machine = (EditText) findViewById(R.id.machine);
+       	 	nameValuePairs.add(new BasicNameValuePair("machine", machine.getText().toString()));
+       	 	httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+       	 	HttpResponse response = httpclient.execute(httppost);
+       	 	System.out.println("response is "+ response);
+       	 	
+       	 	HttpEntity entity  = response.getEntity();
+       	 	String responseString = EntityUtils.toString(entity, "UTF-8");
+       	 	TextView myText = (TextView) findViewById(R.id.textView1);
+			myText.setText(responseString);
         } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
+        	// TODO Auto-generated catch block
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+        	// TODO Auto-generated catch block
         }
     } 
 
@@ -203,28 +142,39 @@ public class MainActivity extends Activity {
     	super.onDestroy();
     	unregisterReceiver(myReceiver);
     }
+    
+    private void sendTicketRequest() {
+    	Intent intent = new Intent();
+    	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        intent.setAction("com.example.dummyKerb.TESTING");
+        Context c = MainActivity.this.getApplicationContext();
+        String pname = c.getPackageName();
+        //System.out.println("Packname " + pname);
+        intent.putExtra("package", pname);
+        intent.putExtra("servicePrincipal", "HTTP@xvm.mit.edu");
+        intent.putExtra("server", "18.181.0.62");
+        intent.putExtra("port", 442);
+        sendBroadcast(intent, "com.example.dummyKerb.KERB_LISTENER_PERM");
+        System.out.println("Sending stuff");
+    }
 
     public void addListenerOnButton() {
-    	button = (Button) findViewById(R.id.button1);
-    	button.setOnClickListener(new View.OnClickListener() {
+    	button1 = (Button) findViewById(R.id.button1);
+    	button1.setOnClickListener(new View.OnClickListener() {
     		@Override
     		public void onClick(View v) {
-	    		Intent intent = new Intent();
-	        	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-	            intent.setAction("com.example.dummyKerb.TESTING");
-	            //intent.putExtra("package", "com.example.dummydemo");
-	            Context c = MainActivity.this.getApplicationContext();
-	            String pname = c.getPackageName();
-	            //System.out.println("Packname " + pname);
-	            intent.putExtra("package", pname);
-	            intent.putExtra("servicePrincipal", "HTTP@xvm.mit.edu");
-	            intent.putExtra("server", "18.181.0.62");
-	            intent.putExtra("port", 442);
-	            sendBroadcast(intent, "com.example.dummyKerb.KERB_LISTENER_PERM");
-	            System.out.println("Sending stuff");
+    			command = "list";
+	    		sendTicketRequest();
     		}
     	});
-    	
+    	button2 = (Button) findViewById(R.id.button2);
+    	button2.setOnClickListener(new View.OnClickListener() {
+    		@Override
+    		public void onClick(View v) {
+    			command = "reboot";
+	    		sendTicketRequest();
+    		}
+    	});
     }
     
 }

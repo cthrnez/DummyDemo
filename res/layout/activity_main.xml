@@ -17,14 +17,44 @@
         android:layout_marginTop="74dp"
         android:textAppearance="@style/AppBaseTheme"
         android:textSize="10px" />
+    
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="18dp"
+        android:paddingLeft="5px"
+        android:text="Enter Machine Name (for Reboot):"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="6pt" />
+    
+    <EditText android:id="@+id/machine" 
+        android:layout_height="wrap_content" 
+        android:layout_width="wrap_content" 
+        android:layout_below="@id/textView2"
+        android:layout_marginLeft="5px" 
+        android:layout_marginRight="5px"
+        android:hint="blah" />
+    
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="List XVM machines!" />
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignTop="@+id/textView1"
+        android:text="List" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView1"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="Reboot" />
 
 </RelativeLayout>
