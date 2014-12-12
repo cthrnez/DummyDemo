@@ -8,6 +8,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.coconuts.MainActivity" >
     
+    
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_alignLeft="@+id/machine"
+        android:text="List XVMs"
+        android:width="100dp"
+        android:height="20dp" />
+    
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -31,6 +43,15 @@
         android:layout_marginTop="41dp"
         android:textAppearance="@style/AppBaseTheme"
         android:textSize="20px" />
+    
+    <EditText
+        android:id="@+id/machine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:ems="10"
+        android:hint=""/>
 
     <Button
         android:id="@+id/button2"
@@ -38,26 +59,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/machine"
         android:layout_marginTop="41dp"
-        android:layout_toRightOf="@+id/textView1"
-        android:text="Reboot" />
+        android:text="Reboot"
+        android:width="100dp"
+        android:height="20dp" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignLeft="@+id/machine"
-        android:text="List" />
 
-    <EditText
-        android:id="@+id/machine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:align_bottom="@+id/button1"
-        android:ems="10"
-        android:hint=""/>
+    
 
 </RelativeLayout>

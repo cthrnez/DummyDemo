@@ -134,9 +134,29 @@ public class MainActivity extends Activity {
     }
     
     /*
-     * Send ticket request to the Kerberos app.  
+     * Check if machine name contains only alphanumeric characters or dashes.
+     * (SIPB only allows these machine names).
+     */
+    public boolean isGoodMachine(){
+        EditText machine = (EditText) findViewById(R.id.machine);
+        String fullname = machine.getText().toString();
+        String name = fullname.replace("-", "");
+        String pattern= "^[a-zA-Z0-9]*$";
+        if(name.matches(pattern)) {
+            return true;
+        }
+        return false;   
+    }
+    
+    /*
+     * Send ticket request to the Kerberos app if machine name is correctly done.  
      */
     private void sendTicketRequest() {
+        if (!isGoodMachine()) {
+            TextView myText = (TextView) findViewById(R.id.textView1);
+            myText.setText("Improper machine name");
+            return;
+        }
     	Intent intent = new Intent();
     	intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         intent.setAction("com.example.dummyKerb.TESTING");
