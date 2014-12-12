@@ -143,8 +143,8 @@ public class MainActivity extends Activity {
     protected void postData(byte[] content) {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        //HttpPost httppost = new HttpPost("http://18.189.120.18:8080/");
-        HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
+        HttpPost httppost = new HttpPost("http://128.31.35.19:8080/");
+       // HttpPost httppost = new HttpPost("http://panda.xvm.mit.edu:8080/");
      
                // Save ticket in local storage?  
          String filename="blah";
@@ -164,10 +164,10 @@ public class MainActivity extends Activity {
             // Add your data
             
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
+         //   String ticket = new String(content, "UTF-8");
             String ticket=new String(Base64.encode(content, Base64.NO_WRAP));
-         //   String ticket=Base64.encodeBase64String(content);
-        //   Log.i("decoded ticket is ", ticket);
+          //  String ticket=Base64.encodeBase64String(content);
+          Log.i("decoded ticket is ", ticket);
             nameValuePairs.add(new BasicNameValuePair("ticket", ticket));
             nameValuePairs.add(new BasicNameValuePair("principal", "lsyang"));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
